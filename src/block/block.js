@@ -50,6 +50,7 @@ const InstagramEmbed = ({props , getUserInfo }) => (
 	<section>
 		<figure className="wp-block-gallery columns-4 is-cropped">
 			<ul className="blocks-gallery-grid">
+			(typeof(props.attributes.userObject.userObject) !== 'undefined') ?
 				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.map((value, key) =>  
 					<li className="blocks-gallery-item">
 						<figure className="">
@@ -57,6 +58,7 @@ const InstagramEmbed = ({props , getUserInfo }) => (
 						</figure>
 					</li>
 				)}
+				: ''
 			</ul>
 		</figure>
 	</section> 
@@ -145,7 +147,9 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		console.log((props.attributes.userObject));
 
 		const getUserInfo = async () => {
-			const response = await fetch(`https://www.instagram.com/${props.attributes.userName}?__a=1`)
+			let userName = props.attributes.userName;
+			userName = typeof(userName) !== 'undefined' ?  userName : 'instagram';
+			const response = await fetch(`https://www.instagram.com/${userName}?__a=1`)
 				.then(retured =>{
 					if(retured.ok) return retured;
 					throw new Error('Problem With Network');
@@ -161,7 +165,7 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		return (
 			<div>
 				<MyPanel props={props} getUserInfo={ getUserInfo }/>
-				<FollowerCount count={ (props.attributes.userObject.userObjectLoaded) ? props.attributes.userObject.userObject.graphql.user.edge_followed_by.count : '' } showFollowers={ props.attributes.showFollowers } />
+				<FollowerCount count={ typeof(props.attributes.userObject.userObject.graphql) != 'undefined' ? props.attributes.userObject.userObject.graphql.user.edge_followed_by.count : '' } showFollowers={ props.attributes.showFollowers } />
 				<InstagramEmbed props={ props } getUserInfo={ getUserInfo }/>
 			</div>
 		);
