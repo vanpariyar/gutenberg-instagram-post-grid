@@ -1,5 +1,5 @@
 /**
- * BLOCK: gutenberg-instagram-post-grid
+ * BLOCK: Gutenberg Instagram Block
  *
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
@@ -96,14 +96,14 @@ const FollowerCount = ({count, showFollowers}) => (
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'cgb/block-gutenberg-demo-2', {
+registerBlockType( 'vanpariyar/instagram-post-grid', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	title: __( 'gutenberg-demo-2 - CGB Block' ), // Block title.
-	icon: 'shield', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
+	title: __( 'Instagram Post Grid' ), // Block title.
+	icon: 'instagram', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
 	category: 'common', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
 	keywords: [
-		__( 'gutenberg-demo-2 — CGB Block' ),
-		__( 'CGB Example' ),
+		__( 'Instagram Post Grid' ),
+		__( 'vanpariyar' ),
 		__( 'create-guten-block' ),
 	],
 	attributes: {
