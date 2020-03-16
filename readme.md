@@ -1,6 +1,10 @@
 
 ### See the Demo
 
+Enter any Public UserName To this Plugin and You Will see the recent 16 posts.
+
+Welcome You to develop This Plugin More efficient.
+
 ![Screenshot from 2020-03-16 15-33-19fasd](https://user-images.githubusercontent.com/26689210/76748799-66c7ff00-67a1-11ea-83a3-d24205d2fa56.png)
 
 ------------------------------------------------------------------------------------------------------
