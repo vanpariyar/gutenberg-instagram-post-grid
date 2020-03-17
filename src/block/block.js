@@ -28,28 +28,43 @@ const {
 } = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
+const InstaPanel = ({props , getUserInfo }) => (
+	<PanelBody title="My Block Settings" initialOpen={ true }>
+		<PanelRow>
+			<strong>Note: This Will only works For instagram Public Acoount.</strong>
+		</PanelRow>
+		<PanelRow>
+			<ToggleControl checked={ props.attributes.showFollowers } label="show Your Followers" onChange={ () => props.setAttributes({ 'showFollowers': !props.attributes.showFollowers }) } />				
+		</PanelRow>
+		<PanelRow>
+			<ToggleControl checked={ props.attributes.isCroped } label="Image Crop ?" onChange={ () => props.setAttributes({ 'isCroped': !props.attributes.isCroped }) } />				
+		</PanelRow>
+		<PanelRow>
+			<p>Column Settings:</p>
+			<RangeControl
+				value={ props.attributes.column }
+				onChange={ ( column ) => props.setAttributes( { column: column } ) }
+				min={ 1 }
+				max={ 8 }
+			/>
+		</PanelRow>
+		<PanelRow>
+			<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
+		</PanelRow>
+		<PanelRow>
+			<Button isPrimary onClick={ ()=> getUserInfo() } > Fetch My Details </Button>	
+		</PanelRow>
+	</PanelBody>
+);
 const MyPanel = ({props , getUserInfo }) => (
 	<InspectorControls>
-		<PanelBody title="My Block Settings" initialOpen={ true }>
-			<PanelRow>
-				<strong>Note: This Will only works For instagram Public Acoount.</strong>
-			</PanelRow>
-			<PanelRow>
-				<ToggleControl checked={ props.attributes.showFollowers } label="show Your Followers" onChange={ () => props.setAttributes({ 'showFollowers': !props.attributes.showFollowers }) } />				
-			</PanelRow>
-			<PanelRow>
-				<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
-			</PanelRow>
-			<PanelRow>
-				<Button isPrimary onClick={ ()=> getUserInfo() } > Fetch My Details </Button>	
-			</PanelRow>
-		</PanelBody>
+		<InstaPanel props = {props} getUserInfo = { getUserInfo } />
 	</InspectorControls>	
 );
 const InstagramEmbed = ({props , getUserInfo }) => (
 	props.attributes.userObject.userObjectLoaded ?
 	<section>
-		<figure className="wp-block-gallery columns-4 is-cropped">
+		<figure className={ `wp-block-gallery columns-${props.attributes.column} ${ (props.attributes.isCroped) ? 'is-cropped' : '' }` }>
 			<ul className="blocks-gallery-grid">
 				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.map((value, key) =>  
 					<li key={key} className="blocks-gallery-item">
@@ -63,20 +78,7 @@ const InstagramEmbed = ({props , getUserInfo }) => (
 	</section> 
 	: 
 	<div>
-		<PanelBody title="My Block Settings" initialOpen={ true }>
-			<PanelRow>
-				<strong>Note: This Will only works For instagram Public Acoount.</strong>
-			</PanelRow>
-			<PanelRow>
-				<ToggleControl checked={ props.attributes.showFollowers } label="show Your Followers" onChange={ () => props.setAttributes({ 'showFollowers': !props.attributes.showFollowers }) } />				
-			</PanelRow>
-			<PanelRow>
-				<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
-			</PanelRow>
-			<PanelRow>
-				<Button isPrimary onClick={ ()=> getUserInfo() } > Fetch My Details </Button>
-			</PanelRow>
-		</PanelBody>
+		<InstaPanel props = {props} getUserInfo = { getUserInfo } />
 	</div>	
 );
 const FollowerCount = ({count, showFollowers}) => (
@@ -110,6 +112,14 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 	attributes: {
 		"userName": {
 			type: 'string'
+		},
+		"column": {
+			type: 'integer',
+			default: 4
+		},
+		"isCroped": {
+			type: 'integer',
+			default: 1
 		},
 		"showFollowers": {
 			type: 'boolean',
@@ -149,7 +159,7 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 			const response = await fetch(`https://www.instagram.com/${userName}?__a=1`)
 				.then(retured =>{
 					if(retured.ok) return retured;		
-					// throw new Error('Problem With Network');
+					throw new Error('Problem With Network');
 				}).then(retured =>{
 					return retured.json();
 				});
@@ -182,7 +192,9 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 	save: ( props ) => {
 		return (
 			<div>
-				<InstagramEmbed props={props} getUserInfo={ getUserInfo }/>
+				<MyPanel props={props} />
+				<FollowerCount count={ props.attributes.userObject.userObject.graphql.user.edge_followed_by.count } showFollowers={ props.attributes.showFollowers } />
+				<InstagramEmbed props={ props } />
 			</div>
 		);
 	},
