@@ -27,6 +27,7 @@ const {
 	Button,
 } = wp.components;
 const { InspectorControls } = wp.blockEditor;
+
 const MyPanel = ({props , getUserInfo }) => (
 	<InspectorControls>
 		<PanelBody title="My Block Settings" initialOpen={ true }>
@@ -46,19 +47,17 @@ const MyPanel = ({props , getUserInfo }) => (
 	</InspectorControls>	
 );
 const InstagramEmbed = ({props , getUserInfo }) => (
-	Object.keys(props.attributes.userObject.userObject).length > 1 ?
+	props.attributes.userObject.userObjectLoaded ?
 	<section>
 		<figure className="wp-block-gallery columns-4 is-cropped">
 			<ul className="blocks-gallery-grid">
-			(typeof(props.attributes.userObject.userObject) !== 'undefined') ?
 				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.map((value, key) =>  
-					<li className="blocks-gallery-item">
+					<li key={key} className="blocks-gallery-item">
 						<figure className="">
 							<img src={value.node.display_url} alt="" data-id="130" tabindex="0" aria-label="image 1 of 8 in gallery" />
 						</figure>
 					</li>
 				)}
-				: ''
 			</ul>
 		</figure>
 	</section> 
@@ -144,22 +143,20 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 	 * @returns {Mixed} JSX Component.
 	 */
 	edit: ( props ) => {
-		console.log((props.attributes.userObject));
-
 		const getUserInfo = async () => {
-			let userName = props.attributes.userName;
+			let userName = (props.attributes.userName);
 			userName = typeof(userName) !== 'undefined' ?  userName : 'instagram';
 			const response = await fetch(`https://www.instagram.com/${userName}?__a=1`)
 				.then(retured =>{
-					if(retured.ok) return retured;
-					throw new Error('Problem With Network');
+					if(retured.ok) return retured;		
+					// throw new Error('Problem With Network');
 				}).then(retured =>{
 					return retured.json();
 				});
+			const userObjectLoaded = (typeof(response.captcha) == 'undefined') ? 1 : 0 ;
 			props.setAttributes( { 
-				"userObject": { userObject : response  , userObjectLoaded: 1 } 
+				"userObject": { userObject : response  , userObjectLoaded: userObjectLoaded } 
 			} );		
-			console.log(response);
 		}
 
 		return (
@@ -185,7 +182,7 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 	save: ( props ) => {
 		return (
 			<div>
-				<InstagramEmbed props={props} />
+				<InstagramEmbed props={props} getUserInfo={ getUserInfo }/>
 			</div>
 		);
 	},
