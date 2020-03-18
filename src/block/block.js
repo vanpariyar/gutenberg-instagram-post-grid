@@ -28,34 +28,58 @@ const {
 } = wp.components;
 const { InspectorControls } = wp.blockEditor;
 
-const InstaPanel = ({props , getUserInfo }) => (
-	<PanelBody title="My Block Settings" initialOpen={ true }>
-		<PanelRow>
-			<strong>Note: This Will only works For instagram Public Acoount.</strong>
-		</PanelRow>
-		<PanelRow>
-			<ToggleControl checked={ props.attributes.showFollowers } label="show Your Followers" onChange={ () => props.setAttributes({ 'showFollowers': !props.attributes.showFollowers }) } />				
-		</PanelRow>
-		<PanelRow>
-			<ToggleControl checked={ props.attributes.isCroped } label="Image Crop ?" onChange={ () => props.setAttributes({ 'isCroped': !props.attributes.isCroped }) } />				
-		</PanelRow>
-		<PanelRow>
-			<p>Column Settings:</p>
-			<RangeControl
-				value={ props.attributes.column }
-				onChange={ ( column ) => props.setAttributes( { column: column } ) }
-				min={ 1 }
-				max={ 8 }
-			/>
-		</PanelRow>
-		<PanelRow>
-			<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
-		</PanelRow>
-		<PanelRow>
-			<Button isPrimary onClick={ ()=> getUserInfo() } > Fetch My Details </Button>	
-		</PanelRow>
-	</PanelBody>
-);
+const fnum = (x) => {
+	if(isNaN(x)) return x;
+	if(x < 9999) {
+		return x;
+	}
+	if(x < 1000000) {
+		return Math.round(x/1000) + "K";
+	}
+	if( x < 10000000) {
+		return (x/1000000).toFixed(2) + "M";
+	}
+	if(x < 1000000000) {
+		return Math.round((x/1000000)) + "M";
+	}
+	if(x < 1000000000000) {
+		return Math.round((x/1000000000)) + "B";
+	}
+	return "1T+";
+}
+const InstaPanel = ({props , getUserInfo }) => {
+	
+	return (
+		<PanelBody title="My Block Settings" initialOpen={ true }>
+			<PanelRow>
+				<strong>Note: This Will only works For instagram Public Acoount.</strong>
+			</PanelRow>
+			<PanelRow>
+				<ToggleControl checked={ props.attributes.showFollowers } label="show Your Followers" onChange={ () => props.setAttributes({ 'showFollowers': !props.attributes.showFollowers }) } />				
+			</PanelRow>
+			<PanelRow>
+				<ToggleControl checked={ props.attributes.isCroped } label="Image Crop ?" onChange={ () => props.setAttributes({ 'isCroped': !props.attributes.isCroped }) } />				
+			</PanelRow>
+			<PanelRow>
+				<p>Column Settings:</p>
+				<RangeControl
+					value={ props.attributes.column }
+					onChange={ ( column ) => props.setAttributes( { column: column } ) }
+					min={ 1 }
+					max={ 8 }
+				/>
+			</PanelRow>
+			<PanelRow>
+				<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
+			</PanelRow>
+			{props.attributes.userName ? 
+			<PanelRow>
+				<Button isPrimary onClick={ ()=> getUserInfo() } > Fetch My Details </Button>	
+			</PanelRow>
+			: ''}
+		</PanelBody>
+	);
+}
 const MyPanel = ({props , getUserInfo }) => (
 	<InspectorControls>
 		<InstaPanel props = {props} getUserInfo = { getUserInfo } />
@@ -63,7 +87,8 @@ const MyPanel = ({props , getUserInfo }) => (
 );
 const InstagramEmbed = ({props , getUserInfo }) => (
 	props.attributes.userObject.userObjectLoaded ?
-	<section>
+	<Fragment>
+		<FollowerCount count={ typeof(props.attributes.userObject.userObject.graphql) != 'undefined' ? fnum(props.attributes.userObject.userObject.graphql.user.edge_followed_by.count) : '' } showFollowers={ props.attributes.showFollowers } />
 		<figure className={ `wp-block-gallery columns-${props.attributes.column} ${ (props.attributes.isCroped) ? 'is-cropped' : '' }` }>
 			<ul className="blocks-gallery-grid">
 				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.map((value, key) =>  
@@ -75,16 +100,16 @@ const InstagramEmbed = ({props , getUserInfo }) => (
 				)}
 			</ul>
 		</figure>
-	</section> 
+	</Fragment> 
 	: 
 	<div>
 		<InstaPanel props = {props} getUserInfo = { getUserInfo } />
 	</div>	
 );
 const FollowerCount = ({count, showFollowers}) => (
-	<div>
+	<Fragment>
 	{ showFollowers ? `Followers Count - ${count}` : '' } 
-	</div> 	
+	</Fragment> 	
 );
 /**
  * Register: aa Gutenberg Block.
@@ -172,8 +197,8 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		return (
 			<div>
 				<MyPanel props={props} getUserInfo={ getUserInfo }/>
-				<FollowerCount count={ typeof(props.attributes.userObject.userObject.graphql) != 'undefined' ? props.attributes.userObject.userObject.graphql.user.edge_followed_by.count : '' } showFollowers={ props.attributes.showFollowers } />
-				<InstagramEmbed props={ props } getUserInfo={ getUserInfo }/>
+				
+				<InstagramEmbed props={ props } getUserInfo={ getUserInfo } />
 			</div>
 		);
 	},
@@ -193,7 +218,6 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		return (
 			<div>
 				<MyPanel props={props} />
-				<FollowerCount count={ props.attributes.userObject.userObject.graphql.user.edge_followed_by.count } showFollowers={ props.attributes.showFollowers } />
 				<InstagramEmbed props={ props } />
 			</div>
 		);
