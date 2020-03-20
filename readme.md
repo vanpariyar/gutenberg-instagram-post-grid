@@ -1,4 +1,9 @@
-`docker-compose up`
+```
+snap install docker
+pip install docker-compose
+docker-compose up
+```
+goto : http://localhost:8080/
 
 ### See the Demo
 
