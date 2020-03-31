@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Gutenberg Instagram post Grid
  * Plugin URI: https://github.com/vanpariyar/gutenberg-instagram-post-grid/
- * Description: gutenberg-instagram-post-grid — is a Gutenberg plugin created via create-guten-block.
+ * Description: gutenberg-instagram-post-grid — is a Gutenberg plugin.
  * Author: Ronak Vanpariya
  * Author URI: https://github.com/vanpariyar
  * Version: 1.0.0
