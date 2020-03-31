@@ -70,6 +70,15 @@ const InstaPanel = ({props , getUserInfo }) => {
 				/>
 			</PanelRow>
 			<PanelRow>
+				<p>Post Count:</p>
+				<RangeControl
+					value={ props.attributes.postCount }
+					onChange={ ( postCount ) => props.setAttributes( { postCount: postCount } ) }
+					min={ 1 }
+					max={ 12 }
+				/>
+			</PanelRow>
+			<PanelRow>
 				<TextControl value={ props.attributes.userName }  label="Enter Your Instagram username" onChange={(val)=> props.setAttributes({ 'userName': val })} />	
 			</PanelRow>
 			{props.attributes.userName ? 
@@ -91,7 +100,7 @@ const InstagramEmbed = ({props , getUserInfo }) => (
 		<FollowerCount count={ typeof(props.attributes.userObject.userObject.graphql) != 'undefined' ? fnum(props.attributes.userObject.userObject.graphql.user.edge_followed_by.count) : '' } showFollowers={ props.attributes.showFollowers } />
 		<figure className={ `wp-block-gallery columns-${props.attributes.column} ${ (props.attributes.isCroped) ? 'is-cropped' : '' }` }>
 			<ul className="blocks-gallery-grid">
-				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.map((value, key) =>  
+				{props.attributes.userObject.userObject.graphql.user.edge_owner_to_timeline_media.edges.slice( 0 , props.attributes.postCount ).map((value, key) =>  
 					<li key={key} className="blocks-gallery-item">
 						<figure className="">
 							<img src={value.node.display_url} alt="" data-id="130" tabindex="0" aria-label="image 1 of 8 in gallery" />
@@ -141,6 +150,10 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		"column": {
 			type: 'integer',
 			default: 4
+		},
+		"postCount": {
+			type: 'integer',
+			default: 12
 		},
 		"isCroped": {
 			type: 'integer',
