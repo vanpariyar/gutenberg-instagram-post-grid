@@ -6,7 +6,9 @@ docker-compose up
 ```
 goto : http://localhost:8080/
 
-### See the Demo
+### Live Plugin -> https://wordpress.org/plugins/social-gallery-block/
+
+### See the Demo 
 
 Enter any Public UserName To this Plugin and You Will see the recent 16 posts.
 
