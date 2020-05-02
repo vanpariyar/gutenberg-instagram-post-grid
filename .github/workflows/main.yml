@@ -1,0 +1,21 @@
+ 
+name: Deploy
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: WordPress Plugin Deploy
+      #see rtCamp  repo for the 
+      uses: rtCamp/action-wordpress-org-plugin-deploy@master
+      env:
+        #CUSTOM_COMMAND: ''
+        #CUSTOM_PATH: ''
+        EXCLUDE_LIST: docker-compose.yml README.md _config.yml .editorconfig .eslintignore .eslintrc.json	.gitignore	package-lock.json	package.json readme.md	
+        SLUG: social-gallery-block
+        WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
+        WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
