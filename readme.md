@@ -55,6 +55,9 @@ Below you will find some information on how to run scripts.
 - You don't normally have to `eject` a project because by ejecting you lose the connection with `create-guten-block` and from there onwards you have to update and maintain all the dependencies on your own.
 
 ---
+### Join me On Twitter let's Discuss [@VanpariyaRonakJ](https://twitter.com/VanpariyaRonakJ/)
+
+###Credits:
 
 ###### Feel free to tweet and say 👋 at me [@MrAhmadAwais](https://twitter.com/mrahmadawais/)
 
