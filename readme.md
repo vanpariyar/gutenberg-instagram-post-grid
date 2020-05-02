@@ -1,3 +1,5 @@
+![Deploy](https://github.com/vanpariyar/gutenberg-instagram-post-grid/workflows/Deploy/badge.svg)
+
 Easy Doker Setup
 ```
 snap install docker
