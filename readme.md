@@ -1,5 +1,7 @@
 ![Deploy](https://github.com/vanpariyar/gutenberg-instagram-post-grid/workflows/Deploy/badge.svg)
 
+![Minimalist Etsy Banner](https://user-images.githubusercontent.com/26689210/81413061-6e34d480-9162-11ea-9916-482aa3c747d6.png)
+
 Easy Doker Setup
 ```
 snap install docker
