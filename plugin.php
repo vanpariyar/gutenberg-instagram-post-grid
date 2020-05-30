@@ -5,7 +5,7 @@
  * Description: gutenberg-instagram-post-grid — is a Gutenberg plugin.
  * Author: Ronak Vanpariya
  * Author URI: https://github.com/vanpariyar
- * Version: 1.0.0
+ * Version: 1.8
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
