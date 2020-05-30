@@ -1,6 +1,6 @@
-=== Wp Post Views - Wordpress Post views counter ===
+=== Social Gallery Block - Instagram gallary block ===
 Contributors: vanpariyar
-Tags: instagram post, gutenberg instagram post block, instagram blocks for gutenberg  
+Tags: instagram post, gutenberg instagram post block, instagram blocks for gutenberg , instagram gallery block
 Requires at least: 4.0
 Requires PHP: 5.3
 Tested up to: 5.4
@@ -13,6 +13,11 @@ Instagram Posts Display Block
 == Description ==
 
 Instagram posts block that embed the post of your public account post by instagram Graphql API.
+
+This plugin usage the new Instagram API which is graphQl API.
+
+### Want to to learn how this plugin works ?
+Learn more Here :- https://vanpariyar.github.io/myblog/blog/fetch-instagram-details/
 
 ### Features And Options:
 * Simple, and easy to understand.
