@@ -230,7 +230,6 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 	save: ( props ) => {
 		return (
 			<div>
-				<MyPanel props={props} />
 				<InstagramEmbed props={ props } />
 			</div>
 		);
