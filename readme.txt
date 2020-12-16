@@ -3,8 +3,8 @@ Contributors: vanpariyar
 Tags: instagram post, gutenberg instagram post block, instagram blocks for gutenberg , instagram gallery block
 Requires at least: 4.0
 Requires PHP: 5.3
-Tested up to: 5.4.1
-Stable tag: 1.8
+Tested up to: 5.6
+Stable tag: 1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,8 @@ Learn more Here :- https://vanpariyar.github.io/myblog/blog/fetch-instagram-deta
 
 == Changelog ==
 
+= 2.0 =
+- Fix the gallery is not rendoring after Update
 = 1.8 =
 - Minor Changes (Typo and Name Fix)
 = 1.0 =
