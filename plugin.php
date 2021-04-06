@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Social Gallery Block
  * Plugin URI: https://github.com/vanpariyar/gutenberg-instagram-post-grid/
- * Description: gutenberg-instagram-post-grid — is a Gutenberg plugin.
+ * Description: Social Gellery Block — is a Gutenberg plugin.
  * Author: Ronak Vanpariya
  * Author URI: https://github.com/vanpariyar
  * Version: 2.0

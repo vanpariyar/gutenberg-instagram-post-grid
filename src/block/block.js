@@ -194,9 +194,9 @@ registerBlockType( 'vanpariyar/instagram-post-grid', {
 		const getUserInfo = async () => {
 			let userName = (props.attributes.userName);
 			userName = typeof(userName) !== 'undefined' ?  userName : 'instagram';
-			const response = await fetch(`https://www.instagram.com/${userName}?__a=1`)
-				.then(retured =>{
-					if(retured.ok) return retured;		
+			const response = await fetch(`https://www.instagram.com/${userName}/channel/?__a=1`).then(retured =>{
+					console.log(retured);
+					if(retured.ok) return retured;	
 					throw new Error('Problem With Network');
 				}).then(retured =>{
 					return retured.json();
