@@ -4,7 +4,7 @@ Tags: social post, gutenberg social post block, social blocks for gutenberg , so
 Requires at least: 4.0
 Requires PHP: 5.3
 Tested up to: 5.6
-Stable tag: 1.9
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,8 @@ Learn more Here :- https://vanpariyar.github.io/blog/fetch-instagram-details/
 
 == Changelog ==
 
+= 2.1 =
+- Fix the plugin name and working on gellery not showing
 = 2.0 =
 - Fix the gallery is not rendoring after Update
 = 1.8 =
