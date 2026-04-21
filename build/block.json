@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vanpariyar/instagram-post-grid",
+  "version": "1.0.0",
+  "title": "Social Gallery Block",
+  "category": "design",
+  "icon": "instagram",
+  "description": "Instagram Post Grid Block.",
+  "keywords": [
+    "Instagram Post Grid",
+    "vanpariyar",
+    "Social Gallery"
+  ],
+  "attributes": {
+    "userName": {
+      "type": "string"
+    },
+    "column": {
+      "type": "integer",
+      "default": 4
+    },
+    "postCount": {
+      "type": "integer",
+      "default": 12
+    },
+    "isCroped": {
+      "type": "boolean",
+      "default": true
+    },
+    "showFollowers": {
+      "type": "boolean",
+      "default": false
+    },
+    "showProfilePic": {
+      "type": "boolean"
+    },
+    "userObject": {
+      "type": "object",
+      "default": {
+        "userObjectLoaded": 0,
+        "userObject": {}
+      }
+    },
+    "userObjectLoaded": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "textdomain": "gutenberg-instagram-post-grid",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

@@ -1,0 +1,96 @@
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+
+@import "common";
+
+.wp-block-vanpariyar-instagram-post-grid {
+	margin: 2rem 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+	.instagram-follower-count {
+		font-weight: 600;
+		margin-bottom: 1rem;
+		font-size: 1.1rem;
+		color: #262626;
+	}
+
+	.wp-block-gallery {
+		display: grid;
+		gap: 10px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		&.columns-1 { grid-template-columns: repeat(1, 1fr); }
+		&.columns-2 { grid-template-columns: repeat(2, 1fr); }
+		&.columns-3 { grid-template-columns: repeat(3, 1fr); }
+		&.columns-4 { grid-template-columns: repeat(4, 1fr); }
+		&.columns-5 { grid-template-columns: repeat(5, 1fr); }
+		&.columns-6 { grid-template-columns: repeat(6, 1fr); }
+		&.columns-7 { grid-template-columns: repeat(7, 1fr); }
+		&.columns-8 { grid-template-columns: repeat(8, 1fr); }
+
+		.blocks-gallery-grid {
+			display: contents;
+			padding: 0;
+			margin: 0;
+		}
+
+		.blocks-gallery-item {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			position: relative;
+			overflow: hidden;
+
+			figure {
+				margin: 0;
+				height: 100%;
+			}
+
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+				object-fit: cover;
+				transition: transform 0.3s ease;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+		}
+
+		&.is-cropped .blocks-gallery-item {
+			aspect-ratio: 1 / 1;
+
+			img {
+				height: 100%;
+			}
+		}
+	}
+
+	// Placeholder styling
+	.instagram-placeholder {
+		background: #fafafa;
+		border: 1px solid #dbdbdb;
+		padding: 2rem;
+		text-align: center;
+		border-radius: 4px;
+
+		h3 {
+			margin-top: 0;
+			color: #262626;
+		}
+	}
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+	.wp-block-vanpariyar-instagram-post-grid .wp-block-gallery {
+		grid-template-columns: repeat(2, 1fr) !important;
+	}
+}

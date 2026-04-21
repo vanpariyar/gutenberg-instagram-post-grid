@@ -1,13 +1,18 @@
 {
-  "name": "gutenberg-instagram-post-grid-cgb-guten-block",
+  "name": "gutenberg-instagram-post-grid",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "cgb-scripts start",
-    "build": "cgb-scripts build",
-    "eject": "cgb-scripts eject"
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "start": "wp-scripts start",
+    "wp:start": "npx @wp-playground/cli server --auto-mount --login"
   },
-  "dependencies": {
-    "cgb-scripts": "1.23.0"
+  "devDependencies": {
+    "@wordpress/scripts": "^32.0.0"
   }
 }

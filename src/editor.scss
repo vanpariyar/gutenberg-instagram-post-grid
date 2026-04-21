@@ -1,0 +1,28 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+@import "common";
+
+.wp-block-vanpariyar-instagram-post-grid {
+	background: $green;
+	border: 0.2rem solid $black;
+	color: $black;
+	margin: 2rem auto;
+	max-width: 740px;
+	padding: 2rem;
+	border-radius: 4px;
+
+	// Ensure the grid looks good inside the box
+	.wp-block-gallery {
+		margin-top: 1rem;
+	}
+
+	.instagram-placeholder {
+		background: rgba(255, 255, 255, 0.5);
+		border: 1px dashed $black;
+	}
+}
