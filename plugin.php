@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Social Gallery Block
  * Plugin URI: https://github.com/vanpariyar/gutenberg-instagram-post-grid/
- * Description: Social Gellery Block — is a Gutenberg plugin.
+ * Description: Social Gallery Block — is a Gutenberg plugin.
  * Author: Ronak Vanpariya
  * Author URI: https://github.com/vanpariyar
- * Version: 2.1
+ * Version: 2.1.0
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -62,7 +62,7 @@ add_action( 'rest_api_init', 'gutenberg_instagram_post_grid_register_rest_route'
  * Proxy Instagram images to avoid CORS/CORP issues.
  */
 function gutenberg_instagram_post_grid_proxy_image( $request ) {
-	$url = $request->get_param( 'url' );
+	$url = ( $request instanceof WP_REST_Request ) ? $request->get_param( 'url' ) : $request;
 	
 	// Basic security check: only proxy from known Instagram/FB domains
 	$allowed_domains = array( 'fbcdn.net', 'instagram.com', 'cdninstagram.com' );
@@ -83,8 +83,8 @@ function gutenberg_instagram_post_grid_proxy_image( $request ) {
 
 	$response = wp_remote_get( $url, array(
 		'timeout'   => 60,
-		'sslverify' => false, // Often needed in local environments/Playground
-		'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+		'sslverify' => false,
+		'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
 	) );
 
 	if ( is_wp_error( $response ) ) {
@@ -104,40 +104,60 @@ function gutenberg_instagram_post_grid_proxy_image( $request ) {
 	}
 
 	// Clean any previous output to avoid corrupted images
-	while ( ob_get_level() ) {
-		ob_end_clean();
-	}
+	if ( ( $request instanceof WP_REST_Request ) ) {
+		while ( ob_get_level() ) {
+			ob_end_clean();
+		}
 
-	if ( ! $content_type ) {
-		$content_type = 'image/jpeg'; // Fallback
-	}
+		if ( ! $content_type ) {
+			$content_type = 'image/jpeg';
+		}
 
-	header( 'Content-Type: ' . $content_type );
-	header( 'Content-Length: ' . strlen( $body ) );
-	header( 'Cache-Control: public, max-age=86400' );
-	header( 'Access-Control-Allow-Origin: *' );
-	header( 'X-Content-Type-Options: nosniff' );
+		header( 'Content-Type: ' . $content_type );
+		header( 'Content-Length: ' . strlen( $body ) );
+		header( 'Cache-Control: public, max-age=86400' );
+		header( 'Access-Control-Allow-Origin: *' );
+		header( 'X-Content-Type-Options: nosniff' );
+		
+		echo $body;
+		exit;
+	}
 	
-	echo $body;
-	exit;
+	return $body;
 }
 
 /**
- * Fetch Instagram data from the server side to avoid CORS issues.
+ * Fetch Instagram data.
  */
 function gutenberg_instagram_post_grid_fetch_data( $request ) {
-	$username = $request->get_param( 'username' );
+	$username = ( $request instanceof WP_REST_Request ) ? $request->get_param( 'username' ) : $request;
+	$transient_key = 'insta_grid_' . md5( $username );
 	
-	// Strategy: Use the web_profile_info endpoint which is currently more reliable than ?__a=1
-	// but requires an App ID header.
+	$cached_data = get_transient( $transient_key );
+	if ( $cached_data !== false ) {
+		return ( $request instanceof WP_REST_Request ) ? rest_ensure_response( $cached_data ) : (object) $cached_data;
+	}
+	
 	$url = sprintf( 'https://www.instagram.com/api/v1/users/web_profile_info/?username=%s', $username );
 	
 	$response = wp_remote_get( $url, array(
 		'timeout' => 20,
 		'sslverify' => false,
 		'headers' => array(
-			'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-			'x-ig-app-id' => '936619743392459', // This is a public App ID used by the web client
+			'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+			'x-ig-app-id' => '936619743392459',
+			'x-asbd-id' => '129477',
+			'x-ig-www-claim' => '0',
+			'x-requested-with' => 'XMLHttpRequest',
+			'accept' => '*/*',
+			'accept-language' => 'en-US,en;q=0.9',
+			'referer' => 'https://www.instagram.com/' . $username . '/',
+			'sec-ch-ua' => '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+			'sec-ch-ua-mobile' => '?0',
+			'sec-ch-ua-platform' => '"macOS"',
+			'sec-fetch-dest' => 'empty',
+			'sec-fetch-mode' => 'cors',
+			'sec-fetch-site' => 'same-origin',
 		),
 	) );
 
@@ -148,7 +168,6 @@ function gutenberg_instagram_post_grid_fetch_data( $request ) {
 	$status_code = wp_remote_retrieve_response_code( $response );
 	$body = wp_remote_retrieve_body( $response );
 
-	// Strip the "for (;;);" prefix if Instagram adds it for JSON hijacking protection
 	if ( strpos( $body, 'for (;;);' ) === 0 ) {
 		$body = substr( $body, 9 );
 	}
@@ -162,16 +181,91 @@ function gutenberg_instagram_post_grid_fetch_data( $request ) {
 		) );
 	}
 
-	// The web_profile_info endpoint returns data in a slightly different format (data.user instead of graphql.user)
-	// We'll normalize it to keep the JS simple, or just return as is if the JS can handle it.
-	// But to match the previous structure:
+	$final_data = $data;
 	if ( isset( $data->data->user ) ) {
-		return rest_ensure_response( array(
+		$final_data = array(
 			'graphql' => array(
 				'user' => $data->data->user
 			)
-		) );
+		);
 	}
 
-	return rest_ensure_response( $data );
+	set_transient( $transient_key, $final_data, HOUR_IN_SECONDS );
+
+	return ( $request instanceof WP_REST_Request ) ? rest_ensure_response( $final_data ) : (object) $final_data;
 }
+
+/**
+ * Shortcode to display Instagram post grid.
+ * Usage: [instagram_post_grid username="instagram" columns="4" count="12"]
+ */
+function gutenberg_instagram_post_grid_shortcode( $atts ) {
+	$atts = shortcode_atts( array(
+		'username' => '',
+		'columns'  => 4,
+		'count'    => 12,
+		'cropped'  => 'yes',
+	), $atts, 'instagram_post_grid' );
+
+	if ( empty( $atts['username'] ) ) {
+		return '<p>' . __( 'Please provide an Instagram username.', 'gutenberg-instagram-post-grid' ) . '</p>';
+	}
+
+	$data = gutenberg_instagram_post_grid_fetch_data( $atts['username'] );
+
+	if ( is_wp_error( $data ) ) {
+		$error_message = $data->get_error_message();
+		// Try to parse JSON body for better error message
+		$error_data = $data->get_error_data();
+		if ( isset( $error_data['body'] ) ) {
+			$body = json_decode( $error_data['body'] );
+			if ( isset( $body->message ) ) {
+				$error_message = $body->message;
+			}
+		}
+		return '<p>' . sprintf( __( 'Error: %s', 'gutenberg-instagram-post-grid' ), esc_html( $error_message ) ) . '</p>';
+	}
+
+	$user = isset( $data->graphql->user ) ? $data->graphql->user : null;
+
+	if ( ! $user ) {
+		return '<p>' . __( 'No Instagram data found.', 'gutenberg-instagram-post-grid' ) . '</p>';
+	}
+
+	$media = isset( $user->edge_owner_to_timeline_media->edges ) ? $user->edge_owner_to_timeline_media->edges : array();
+	$media = array_slice( $media, 0, (int) $atts['count'] );
+
+	if ( empty( $media ) ) {
+		return '<p>' . __( 'No posts found for this user.', 'gutenberg-instagram-post-grid' ) . '</p>';
+	}
+
+	// Enqueue styles
+	wp_enqueue_style( 'gutenberg-instagram-post-grid-style', plugins_url( 'build/style-index.css', __FILE__ ), array(), '2.1.0' );
+
+	$columns = (int) $atts['columns'];
+	$is_cropped = $atts['cropped'] === 'yes';
+
+	ob_start();
+	?>
+	<div class="wp-block-vanpariyar-instagram-post-grid">
+		<figure class="wp-block-gallery columns-<?php echo esc_attr( $columns ); ?> <?php echo $is_cropped ? 'is-cropped' : ''; ?>">
+			<ul class="blocks-gallery-grid">
+				<?php foreach ( $media as $post ) : 
+					$node = $post->node;
+					$proxy_url = add_queryArgs( array( 'url' => $node->display_url ), rest_url( 'instagram-post-grid/v1/proxy-image' ) );
+					?>
+					<li class="blocks-gallery-item">
+						<figure>
+							<a href="https://www.instagram.com/p/<?php echo esc_attr( $node->shortcode ); ?>/" target="_blank" rel="noopener noreferrer">
+								<img src="<?php echo esc_url( $proxy_url ); ?>" alt="" />
+							</a>
+						</figure>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</figure>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode( 'instagram_post_grid', 'gutenberg_instagram_post_grid_shortcode' );

@@ -8,21 +8,90 @@
 @import "common";
 
 .wp-block-vanpariyar-instagram-post-grid {
-	background: $green;
-	border: 0.2rem solid $black;
-	color: $black;
-	margin: 2rem auto;
-	max-width: 740px;
-	padding: 2rem;
-	border-radius: 4px;
+	border: 1px solid $gray-medium;
+	background: $white;
+	padding: 1.5rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
-	// Ensure the grid looks good inside the box
-	.wp-block-gallery {
-		margin-top: 1rem;
+	// Label for the block in editor
+	&::before {
+		content: "Instagram Post Grid";
+		display: block;
+		font-size: 11px;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: $gray-dark;
+		margin-bottom: 1rem;
+		letter-spacing: 0.5px;
 	}
 
 	.instagram-placeholder {
-		background: rgba(255, 255, 255, 0.5);
-		border: 1px dashed $black;
+		background: $gray-light;
+		border: 2px dashed $gray-medium;
+		border-radius: 6px;
+		padding: 3rem 2rem;
+		transition: all 0.2s ease;
+
+		&:hover {
+			border-color: $insta-blue;
+		}
+
+		h3 {
+			font-size: 1.4rem;
+			margin-bottom: 0.5rem;
+			color: $black;
+		}
+
+		// Improve the settings inside the placeholder
+		.components-panel__body {
+			background: transparent;
+			border: none;
+			margin-top: 1.5rem;
+			
+			.components-panel__body-title {
+				display: none; // Hide title as it's repetitive in placeholder
+			}
+		}
+
+		.components-button.is-primary {
+			background-color: $insta-blue;
+			border-radius: 4px;
+			font-weight: 600;
+			padding: 0.5rem 1.5rem;
+			height: auto;
+			
+			&:hover {
+				background-color: darken($insta-blue, 10%);
+			}
+		}
+	}
+
+	// Improve followers count display in editor
+	.instagram-follower-count {
+		background: $bg-accent;
+		display: inline-block;
+		padding: 4px 12px;
+		border-radius: 20px;
+		font-size: 0.9rem;
+		border: 1px solid $gray-medium;
+	}
+
+	// Grid adjustments for editor
+	.wp-block-gallery {
+		margin-top: 1.5rem;
+		opacity: 0.9;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+// Ensure inspector controls look clean
+.components-panel__body.is-opened {
+	.components-base-control__label {
+		font-weight: 500;
+		color: $black;
 	}
 }

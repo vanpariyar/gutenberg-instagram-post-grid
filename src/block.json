@@ -2,12 +2,12 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "vanpariyar/instagram-post-grid",
-	"version": "1.0.0",
+	"version": "2.1.0",
 	"title": "Social Gallery Block",
 	"category": "design",
 	"icon": "instagram",
 	"description": "Instagram Post Grid Block.",
-	"keywords": ["Instagram Post Grid", "vanpariyar", "Social Gallery"],
+	"keywords": [ "Instagram Post Grid", "vanpariyar", "Social Gallery" ],
 	"attributes": {
 		"userName": {
 			"type": "string"
@@ -31,14 +31,14 @@
 		"showProfilePic": {
 			"type": "boolean"
 		},
-		"userObject":{
+		"userObject": {
 			"type": "object",
 			"default": {
 				"userObjectLoaded": 0,
 				"userObject": {}
 			}
 		},
-		"userObjectLoaded":{
+		"userObjectLoaded": {
 			"type": "boolean",
 			"default": false
 		}

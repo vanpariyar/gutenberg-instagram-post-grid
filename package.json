@@ -1,18 +1,24 @@
 {
-  "name": "gutenberg-instagram-post-grid",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "wp-scripts build",
-    "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
-    "lint:js": "wp-scripts lint-js",
-    "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
-    "start": "wp-scripts start",
-    "wp:start": "npx @wp-playground/cli server --auto-mount --login"
-  },
-  "devDependencies": {
-    "@wordpress/scripts": "^32.0.0"
-  }
+	"name": "gutenberg-instagram-post-grid",
+	"version": "2.1.0",
+	"private": true,
+	"files": [
+		"build",
+		"plugin.php",
+		"readme.txt",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"wp:start": "npx @wp-playground/cli server --auto-mount --login"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^32.0.0"
+	}
 }

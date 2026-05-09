@@ -1,4 +1,19 @@
 node_modules
+*.zip
+*.log
+*.cache
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+*.idea/
+*.vscode/
+*.env
+*.env.local
+*.env.development
+*.env.test
+*.env.production
 
 ## Uncomment line below if you prefer to
 ## keep compiled files out of version control
