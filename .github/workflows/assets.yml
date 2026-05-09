@@ -15,9 +15,9 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: WordPress.org Assets Deploy
-              uses: 10up/action-wordpress-org-assets-deploy@master
+              uses: 10up/action-wordpress-plugin-asset-update@stable
               env:
-                  SVN_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
                   SVN_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+                  SVN_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
                   SLUG: social-gallery-block
                   ASSETS_DIR: .wporg_assets
