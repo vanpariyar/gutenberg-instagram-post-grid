@@ -1,6 +1,6 @@
 === Social Gallery Block ===
 Contributors: vanpariyar
-Tags: instagram, social post, gallery, gutenberg, social gallery, shortcode
+Tags: instagram, gallery, gutenberg, social gallery, shortcode
 Requires at least: 5.0
 Requires PHP: 7.0
 Tested up to: 6.5

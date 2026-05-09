@@ -14,7 +14,9 @@ jobs:
               env:
                   #CUSTOM_COMMAND: ''
                   #CUSTOM_PATH: ''
-                  EXCLUDE_LIST: docker-compose.yml README.md _config.yml .editorconfig .eslintignore .eslintrc.json	.gitignore	package-lock.json	package.json readme.md .wporg_assets
+                  EXCLUDE_LIST: docker-compose.yml README.md _config.yml .editorconfig .eslintignore .eslintrc.json .gitignore package-lock.json package.json readme.md .wporg_assets
+                  ASSETS_DIR: .wporg_assets
                   SLUG: social-gallery-block
                   WORDPRESS_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
                   WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+

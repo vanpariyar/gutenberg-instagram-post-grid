@@ -1,0 +1,23 @@
+name: Deploy Assets
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - '.wporg_assets/**'
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        name: Deploy Assets to WordPress.org
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: WordPress.org Assets Deploy
+              uses: 10up/action-wordpress-org-assets-deploy@master
+              env:
+                  SVN_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
+                  SVN_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+                  SLUG: social-gallery-block
+                  ASSETS_DIR: .wporg_assets
