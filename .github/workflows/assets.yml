@@ -21,3 +21,4 @@ jobs:
                   SVN_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
                   SLUG: social-gallery-block
                   ASSETS_DIR: .wporg_assets
+                  IGNORE_OTHER_FILES: true

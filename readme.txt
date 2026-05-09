@@ -49,9 +49,9 @@ Instagram limits the number of requests from a single IP. Our plugin uses cachin
 == Screenshots ==
 
 1. The Gutenberg Block settings and real-time preview.
-2. The Instagram grid layout as seen on the frontend of a website.
-3. Preview Images
-4. Preview Images WordPress
+2. The Instagram grid layout on the frontend.
+3. Post count and column settings.
+4. Block preview with placeholder.
 
 == Shortcode Usage ==
 
