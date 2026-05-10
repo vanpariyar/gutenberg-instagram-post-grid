@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vanpariyar/twitter-post-grid",
+  "version": "2.1.0",
+  "title": "Twitter Gallery",
+  "category": "design",
+  "icon": "twitter",
+  "description": "Twitter Media Grid Block.",
+  "keywords": [
+    "Twitter",
+    "X",
+    "Post Grid",
+    "Social Gallery"
+  ],
+  "attributes": {
+    "username": {
+      "type": "string"
+    },
+    "columns": {
+      "type": "integer",
+      "default": 3
+    },
+    "count": {
+      "type": "integer",
+      "default": 6
+    }
+  },
+  "textdomain": "gutenberg-instagram-post-grid",
+  "editorScript": "file:./index.js"
+}

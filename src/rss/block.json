@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "vanpariyar/rss-post-grid",
+	"version": "2.1.0",
+	"title": "RSS Gallery",
+	"category": "design",
+	"icon": "rss",
+	"description": "RSS Media Grid Block.",
+	"keywords": [ "RSS", "Feed", "Post Grid", "Social Gallery" ],
+	"attributes": {
+		"url": {
+			"type": "string"
+		},
+		"columns": {
+			"type": "integer",
+			"default": 3
+		},
+		"count": {
+			"type": "integer",
+			"default": 6
+		}
+	},
+	"textdomain": "gutenberg-instagram-post-grid",
+	"editorScript": "file:./index.js"
+}

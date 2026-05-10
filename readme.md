@@ -3,27 +3,30 @@
 [![Deploy](https://github.com/vanpariyar/gutenberg-instagram-post-grid/workflows/Deploy/badge.svg)](https://github.com/vanpariyar/gutenberg-instagram-post-grid/actions)
 [![WordPress Plugin](https://img.shields.io/wordpress/plugin/v/social-gallery-block.svg)](https://wordpress.org/plugins/social-gallery-block/)
 
-Social Gallery Block is a powerful and lightweight WordPress plugin that allows you to embed your public Instagram posts into your website using a beautiful grid layout. It works both as a **Gutenberg Block** and a **Shortcode**.
+Social Gallery Block is a powerful and lightweight WordPress plugin that allows you to embed your social media feeds into your website using beautiful grid layouts. It supports **Instagram**, **Twitter (X)**, and **RSS feeds** (perfect for Facebook pages).
 
 ![Social Gallery Block Banner](https://user-images.githubusercontent.com/26689210/81413061-6e34d480-9162-11ea-9916-482aa3c747d6.png)
 
 ## 🚀 Features
-* **Gutenberg Ready:** Easy-to-use block with real-time preview.
-* **Shortcode Support:** Use `[instagram_post_grid]` anywhere (Classic Editor, Widgets, etc.).
-* **No App Required:** Works with public Instagram accounts without needing to create a Facebook/Instagram App.
-* **Performance Focused:** Built-in 1-hour transient caching to minimize API calls and prevent rate-limiting.
-* **Interactive:** Images link directly to the original Instagram posts.
-* **Customizable:** Change column count, post count, and toggle image cropping.
-* **Privacy & Security:** Uses a server-side proxy to avoid CORS/CORP issues and protect your site's integrity.
+* **Multi-Platform Support:**
+    * **Instagram:** Embed public profile grids.
+    * **Twitter (X):** Showcase latest media from any public X account.
+    * **RSS / Facebook:** Use any RSS feed (or FB-to-RSS bridge) to display a media gallery.
+* **Gutenberg Ready:** Dedicated blocks for each platform with real-time previews.
+* **Shortcode Support:** Use `[instagram_post_grid]` for Instagram anywhere.
+* **No App Required:** Works with public accounts without needing to create complex API Apps.
+* **Performance Focused:** Built-in 1-hour transient caching to minimize API calls and speed up your site.
+* **Dynamic Rendering:** Galleries update automatically on the frontend without needing to re-save posts.
+* **Privacy & Security:** Uses a server-side proxy for images to avoid CORS issues and protect user privacy.
 
 ## 📖 How to Use
 
-### Gutenberg Block
+### Gutenberg Blocks
 1. In the editor, click the **+** icon.
-2. Search for **"Social Gallery"** or **"Instagram"**.
-3. Add the block and enter your Instagram username in the settings sidebar.
+2. Search for **"Social Gallery"**, **"Instagram"**, **"Twitter"**, or **"RSS Gallery"**.
+3. Add the desired block and configure the settings in the sidebar.
 
-### Shortcode
+### Shortcode (Instagram Only)
 Simply paste the following shortcode into any post, page, or widget:
 
 ```text
@@ -49,17 +52,7 @@ npm run build
 
 # Start development mode
 npm start
-
-# Generate distribution ZIP
-npm run plugin-zip
 ```
-
-### Docker Setup
-A `docker-compose.yml` is provided for quick environment setup:
-```bash
-docker-compose up
-```
-Visit: `http://localhost:8080/`
 
 ## 📸 Screenshots
 

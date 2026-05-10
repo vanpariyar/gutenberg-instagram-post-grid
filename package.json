@@ -1,6 +1,6 @@
 {
 	"name": "gutenberg-instagram-post-grid",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"private": true,
 	"files": [
 		"build",
@@ -16,9 +16,13 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start",
-		"wp:start": "npx @wp-playground/cli server --auto-mount --login"
+		"wp:start": "npx @wp-playground/cli server --auto-mount --login",
+		"docs:dev": "vitepress dev docs",
+		"docs:build": "vitepress build docs",
+		"docs:preview": "vitepress preview docs"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^32.0.0"
+		"@wordpress/scripts": "^32.0.0",
+		"vitepress": "^1.6.4"
 	}
 }

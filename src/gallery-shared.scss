@@ -1,25 +1,16 @@
 /**
- * #.# Styles
- *
- * CSS for both Frontend+Backend.
+ * Shared Gallery Styles
  */
 
-@import "common";
-
-.wp-block-vanpariyar-instagram-post-grid {
+.wp-block-vanpariyar-instagram-post-grid,
+.wp-block-vanpariyar-twitter-post-grid,
+.wp-block-vanpariyar-rss-post-grid {
 	margin: 2rem 0;
 	width: 100%;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-	.instagram-follower-count {
-		font-weight: 600;
-		margin-bottom: 1rem;
-		font-size: 1.1rem;
-		color: $black;
-	}
-
 	.wp-block-gallery {
-		display: grid !important; // Force grid to override Gutenberg defaults
+		display: grid !important;
 		width: 100%;
 		gap: 12px;
 		margin: 0 auto;
@@ -49,12 +40,45 @@
 			position: relative;
 			overflow: hidden;
 			border-radius: 4px;
-			background: $bg-accent;
+			background: #f0f0f0;
 
 			figure {
 				margin: 0;
 				height: 100%;
 				width: 100%;
+			}
+
+			a {
+				display: block;
+				height: 100%;
+				width: 100%;
+				text-decoration: none;
+				color: inherit;
+			}
+
+			.rss-item-link-no-image {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 15px;
+				box-sizing: border-box;
+				background: #f9f9f9;
+				transition: background 0.3s ease;
+
+				&:hover {
+					background: #eeeeee;
+				}
+
+				.rss-item-title {
+					font-size: 14px;
+					line-height: 1.4;
+					font-weight: 500;
+					color: #333;
+					display: -webkit-box;
+					-webkit-line-clamp: 4;
+					-webkit-box-orient: vertical;
+					overflow: hidden;
+				}
 			}
 
 			img {
@@ -79,39 +103,25 @@
 			}
 		}
 	}
-
-	// Placeholder styling
-	.instagram-placeholder {
-		background: $gray-light;
-		border: 1px solid $gray-medium;
-		padding: 2.5rem;
-		text-align: center;
-		border-radius: 8px;
-		width: 100%;
-		box-sizing: border-box;
-
-		h3 {
-			margin-top: 0;
-			color: $black;
-			font-size: 1.25rem;
-		}
-
-		p {
-			color: $gray-dark;
-		}
-	}
 }
 
-// Responsive adjustments
 @media (max-width: 782px) {
-	.wp-block-vanpariyar-instagram-post-grid .wp-block-gallery {
-		grid-template-columns: repeat(2, 1fr) !important;
-		gap: 8px;
+	.wp-block-vanpariyar-instagram-post-grid,
+	.wp-block-vanpariyar-twitter-post-grid,
+	.wp-block-vanpariyar-rss-post-grid {
+		.wp-block-gallery {
+			grid-template-columns: repeat(2, 1fr) !important;
+			gap: 8px;
+		}
 	}
 }
 
 @media (max-width: 480px) {
-	.wp-block-vanpariyar-instagram-post-grid .wp-block-gallery {
-		grid-template-columns: repeat(1, 1fr) !important;
+	.wp-block-vanpariyar-instagram-post-grid,
+	.wp-block-vanpariyar-twitter-post-grid,
+	.wp-block-vanpariyar-rss-post-grid {
+		.wp-block-gallery {
+			grid-template-columns: repeat(1, 1fr) !important;
+		}
 	}
 }

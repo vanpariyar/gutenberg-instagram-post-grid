@@ -15,6 +15,10 @@ node_modules
 *.env.test
 *.env.production
 
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 ## Uncomment line below if you prefer to
 ## keep compiled files out of version control
 # dist/
